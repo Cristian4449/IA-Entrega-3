@@ -117,23 +117,23 @@ sistema_frenado = ctrl.ControlSystem([regla_1, regla_2, regla_3, regla_4, regla_
 simulador_frenado = ctrl.ControlSystemSimulation(sistema_frenado, flush_after_run = 21*21+1)
 
 simulador_frenado.input['Posicion Moto'] = 15
-simulador_frenado.input['Peso Moto'] = 4000
+simulador_frenado.input['Peso Moto'] = 400
 simulador_frenado.input['Velocidad Moto'] = 80
 
 print('Posición: ')
-Entrada = 15
+Entrada = 40
 for t in posicion_moto.terms:
     mval = np.interp(Entrada, posicion_moto.universe, posicion_moto[t].mf)
     print(t, mval)
 
 print('\n\nPeso bruto: ')
-Entrada = 400
+Entrada = 120
 for t in peso_moto.terms:
     mval = np.interp(Entrada, peso_moto.universe, peso_moto[t].mf)
     print(t, mval)
 
 print('\n\nVelocidad: ')
-Entrada = 50
+Entrada = 300
 for t in velocidad_moto.terms:
     mval = np.interp(Entrada, velocidad_moto.universe, velocidad_moto[t].mf)
     print(t, mval)
