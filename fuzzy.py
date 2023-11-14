@@ -17,6 +17,9 @@ posicion_moto['media'] = sk.gaussmf(posicion_moto.universe, 30, 6)
 posicion_moto['lejos'] = sk.gauss2mf(posicion_moto.universe, 58, 8, 62, 6.5)
 
 posicion_moto.view()
+plt.title("Funcion de pertenencia - Posicion Moto")
+plt.xlabel("Posicion Moto")
+plt.ylabel("Pertencia")
 plt.show()
 
 #Generar funciones de pertenencia para pesobruto_moto
@@ -25,6 +28,9 @@ peso_moto['mediano'] = sk.gaussmf(peso_moto.universe, 400, 60)
 peso_moto['pesado'] = sk.gauss2mf(peso_moto.universe, 600, 50, 700, 100)
 
 peso_moto.view()
+plt.title("Funcion de pertenencia - Peso Moto")
+plt.xlabel("Peso Moto")
+plt.ylabel("Pertencia")
 plt.show()
 
 #Generar funciones de pertenencia para velocidad_moto
@@ -35,6 +41,9 @@ velocidad_moto['rapido'] = sk.gaussmf(velocidad_moto.universe, 280, 30)
 velocidad_moto['muy rapido'] = sk.gauss2mf(velocidad_moto.universe, 350, 20, 400, 10)
 
 velocidad_moto.view()
+plt.title("Funcion de pertenencia - Velocidad Moto")
+plt.xlabel("Velocidad Moto")
+plt.ylabel("Pertencia")
 plt.show()
 
 #Generar funciones de pertenencia para fuerzafrenado_moto
@@ -43,7 +52,11 @@ fuerzafrenado_moto['media'] = sk.gaussmf(fuerzafrenado_moto.universe, 500, 132)
 fuerzafrenado_moto['fuerte'] = sk.gauss2mf(fuerzafrenado_moto.universe, 850, 100, 1000, 50)
 
 fuerzafrenado_moto.view()
+plt.title("Funcion de pertenencia - Fuerza frenado moto")
+plt.xlabel("Fuerza de frenado moto")
+plt.ylabel("Pertencia")
 plt.show()
+
 
 #REGLAS CON LA POSICIÓN CERCA
 regla_1 = ctrl.Rule(posicion_moto['cerca'] & peso_moto['liviano'] & velocidad_moto['muy lento'], fuerzafrenado_moto['debil'])
@@ -115,9 +128,9 @@ sistema_frenado = ctrl.ControlSystem([regla_1, regla_2, regla_3, regla_4, regla_
                                      regla_41, regla_42, regla_43, regla_44, regla_45])
 
 simulador_frenado = ctrl.ControlSystemSimulation(sistema_frenado, flush_after_run = 21*21+1)
-
+#Asignacion de entradas mi rey
 simulador_frenado.input['Posicion Moto'] = 15
-simulador_frenado.input['Peso Moto'] = 4000
+simulador_frenado.input['Peso Moto'] = 500
 simulador_frenado.input['Velocidad Moto'] = 80
 
 print('Posición: ')
@@ -127,13 +140,13 @@ for t in posicion_moto.terms:
     print(t, mval)
 
 print('\n\nPeso bruto: ')
-Entrada = 400
+Entrada = 500
 for t in peso_moto.terms:
     mval = np.interp(Entrada, peso_moto.universe, peso_moto[t].mf)
     print(t, mval)
 
 print('\n\nVelocidad: ')
-Entrada = 50
+Entrada = 80
 for t in velocidad_moto.terms:
     mval = np.interp(Entrada, velocidad_moto.universe, velocidad_moto[t].mf)
     print(t, mval)
@@ -141,12 +154,24 @@ for t in velocidad_moto.terms:
 simulador_frenado.compute()
 
 posicion_moto.view(sim=simulador_frenado)
+plt.title("Funcion de pertenencia - Posicion Moto")
+plt.xlabel("Posicion Moto")
+plt.ylabel("Pertencia")
 plt.show()
 peso_moto.view(sim=simulador_frenado)
+plt.title("Funcion de pertenencia - Peso Moto")
+plt.xlabel("Peso Moto")
+plt.ylabel("Pertencia")
 plt.show()
 velocidad_moto.view(sim=simulador_frenado)
+plt.title("Funcion de pertenencia - Velocidad Moto")
+plt.xlabel("Velocidad Moto")
+plt.ylabel("Pertencia")
 plt.show()
 fuerzafrenado_moto.view(sim=simulador_frenado)
+plt.title("Funcion de pertenencia - Fuerza frenado moto")
+plt.xlabel("Fuerza de frenado moto")
+plt.ylabel("Pertencia")
 plt.show()
 
 print('\n\nDebe aplicar una fuerza de ', simulador_frenado.output['Fuerza Frenado'], 'N')
