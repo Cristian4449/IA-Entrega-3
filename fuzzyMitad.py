@@ -71,10 +71,6 @@ regla_4 = ctrl.Rule(posicion_moto['cerca'] & peso_moto['liviano'] & velocidad_mo
 regla_5 = ctrl.Rule(posicion_moto['cerca'] & peso_moto['mediano'] & velocidad_moto['lento'], fuerzafrenado_moto['debil'])
 regla_6 = ctrl.Rule(posicion_moto['cerca'] & peso_moto['pesado'] & velocidad_moto['lento'], fuerzafrenado_moto['debil'])
 
-regla_7 = ctrl.Rule(posicion_moto['cerca'] & peso_moto['liviano'] & velocidad_moto['media'], fuerzafrenado_moto['media'])
-regla_8 = ctrl.Rule(posicion_moto['cerca'] & peso_moto['mediano'] & velocidad_moto['media'], fuerzafrenado_moto['media'])
-regla_9 = ctrl.Rule(posicion_moto['cerca'] & peso_moto['pesado'] & velocidad_moto['media'], fuerzafrenado_moto['media'])
-
 regla_10 = ctrl.Rule(posicion_moto['cerca'] & peso_moto['liviano'] & velocidad_moto['rapido'], fuerzafrenado_moto['media'])
 regla_11 = ctrl.Rule(posicion_moto['cerca'] & peso_moto['mediano'] & velocidad_moto['rapido'], fuerzafrenado_moto['media'])
 regla_12 = ctrl.Rule(posicion_moto['cerca'] & peso_moto['pesado'] & velocidad_moto['rapido'], fuerzafrenado_moto['media'])
@@ -87,10 +83,6 @@ regla_18 = ctrl.Rule(posicion_moto['media'] & peso_moto['pesado'] & velocidad_mo
 regla_19 = ctrl.Rule(posicion_moto['media'] & peso_moto['liviano'] & velocidad_moto['lento'], fuerzafrenado_moto['debil'])
 regla_20 = ctrl.Rule(posicion_moto['media'] & peso_moto['mediano'] & velocidad_moto['lento'], fuerzafrenado_moto['debil'])
 regla_21 = ctrl.Rule(posicion_moto['media'] & peso_moto['pesado'] & velocidad_moto['lento'], fuerzafrenado_moto['debil'])
-
-regla_22 = ctrl.Rule(posicion_moto['media'] & peso_moto['liviano'] & velocidad_moto['media'], fuerzafrenado_moto['media'])
-regla_23 = ctrl.Rule(posicion_moto['media'] & peso_moto['mediano'] & velocidad_moto['media'], fuerzafrenado_moto['media'])
-regla_24 = ctrl.Rule(posicion_moto['media'] & peso_moto['pesado'] & velocidad_moto['media'], fuerzafrenado_moto['media'])
 
 regla_25 = ctrl.Rule(posicion_moto['media'] & peso_moto['liviano'] & velocidad_moto['rapido'], fuerzafrenado_moto['media'])
 regla_26 = ctrl.Rule(posicion_moto['media'] & peso_moto['mediano'] & velocidad_moto['rapido'], fuerzafrenado_moto['media'])
@@ -106,18 +98,14 @@ regla_34 = ctrl.Rule(posicion_moto['lejos'] & peso_moto['liviano'] & velocidad_m
 regla_35 = ctrl.Rule(posicion_moto['lejos'] & peso_moto['mediano'] & velocidad_moto['lento'], fuerzafrenado_moto['debil'])
 regla_36 = ctrl.Rule(posicion_moto['lejos'] & peso_moto['pesado'] & velocidad_moto['lento'], fuerzafrenado_moto['debil'])
 
-regla_37 = ctrl.Rule(posicion_moto['lejos'] & peso_moto['liviano'] & velocidad_moto['media'], fuerzafrenado_moto['media'])
-regla_38 = ctrl.Rule(posicion_moto['lejos'] & peso_moto['mediano'] & velocidad_moto['media'], fuerzafrenado_moto['media'])
-regla_39 = ctrl.Rule(posicion_moto['lejos'] & peso_moto['pesado'] & velocidad_moto['media'], fuerzafrenado_moto['media'])
-
 regla_40 = ctrl.Rule(posicion_moto['lejos'] & peso_moto['liviano'] & velocidad_moto['rapido'], fuerzafrenado_moto['media'])
 regla_41 = ctrl.Rule(posicion_moto['lejos'] & peso_moto['mediano'] & velocidad_moto['rapido'], fuerzafrenado_moto['media'])
 regla_42 = ctrl.Rule(posicion_moto['lejos'] & peso_moto['pesado'] & velocidad_moto['rapido'], fuerzafrenado_moto['media'])
 
-sistema_frenado = ctrl.ControlSystem([regla_1, regla_2, regla_3, regla_4, regla_5, regla_6, regla_7, regla_8, regla_9, regla_10,
+sistema_frenado = ctrl.ControlSystem([regla_1, regla_2, regla_3, regla_4, regla_5, regla_6, regla_10,
                                      regla_11, regla_12, regla_16, regla_17, regla_18, regla_19, regla_20,
-                                     regla_21, regla_22, regla_23, regla_24, regla_25, regla_26, regla_27,
-                                     regla_31, regla_32, regla_33, regla_34, regla_35, regla_36, regla_37, regla_38, regla_39, regla_40,
+                                     regla_21, regla_25, regla_26, regla_27,
+                                     regla_31, regla_32, regla_33, regla_34, regla_35, regla_36, regla_40,
                                      regla_41, regla_42])
 
 simulador_frenado = ctrl.ControlSystemSimulation(sistema_frenado, flush_after_run = 21*21+1)
