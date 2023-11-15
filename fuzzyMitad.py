@@ -12,7 +12,7 @@ velocidad_moto = ctrl.Antecedent(np.arange(0, 400, 1), 'Velocidad Moto')
 fuerzafrenado_moto = ctrl.Consequent(np.arange(50,1000, 1), 'Fuerza Frenado')
 
 #Generar funciones de pertenencia para posicion_moto
-posicion_moto['cerca'] = sk.gauss2mf(posicion_moto.universe, -2.75, 10, 6, 6.5)
+posicion_moto['cerca'] = sk.gauss2mf(posicion_moto.universe, 0, 10, 6, 6.5)
 posicion_moto['media'] = sk.gaussmf(posicion_moto.universe, 30, 6)
 posicion_moto['lejos'] = sk.gauss2mf(posicion_moto.universe, 58, 8, 62, 6.5)
 
@@ -22,15 +22,15 @@ plt.xlabel("Posicion Moto")
 plt.ylabel("Pertencia")
 plt.show()
 
-#Generar funciones de pertenencia para pesobruto_moto
+#Generar funciones de pertenencia para peso_moto
 peso_moto['liviano'] = sk.gauss2mf(peso_moto.universe, 100, 50, 200, 50)
 peso_moto['mediano'] = sk.gaussmf(peso_moto.universe, 400, 60)
 peso_moto['pesado'] = sk.gauss2mf(peso_moto.universe, 600, 50, 700, 100)
 
 peso_moto.view()
 plt.title("Funcion de pertenencia - Peso Moto")
-plt.xlabel("Peso Moto")
-plt.ylabel("Pertencia")
+plt.xlabel("Peso Moto(Kg)")
+plt.ylabel("Grados Pertenencia")
 plt.show()
 
 #Generar funciones de pertenencia para velocidad_moto
@@ -42,8 +42,8 @@ velocidad_moto['muy rapido'] = sk.gauss2mf(velocidad_moto.universe, 350, 20, 400
 
 velocidad_moto.view()
 plt.title("Funcion de pertenencia - Velocidad Moto")
-plt.xlabel("Velocidad Moto")
-plt.ylabel("Pertencia")
+plt.xlabel("Velocidad Moto(Km/h)")
+plt.ylabel("Grados Pertenencia")
 plt.show()
 
 #Generar funciones de pertenencia para fuerzafrenado_moto
@@ -53,87 +53,74 @@ fuerzafrenado_moto['fuerte'] = sk.gauss2mf(fuerzafrenado_moto.universe, 850, 100
 
 fuerzafrenado_moto.view()
 plt.title("Funcion de pertenencia - Fuerza frenado moto")
-plt.xlabel("Fuerza de frenado moto")
-plt.ylabel("Pertencia")
+plt.xlabel("Fuerza de frenado moto(N)")
+plt.ylabel("Grados Pertenencia")
 plt.show()
 
 
 #REGLAS CON LA POSICIÓN CERCA
 regla_1 = ctrl.Rule(posicion_moto['cerca'] & peso_moto['liviano'] & velocidad_moto['muy lento'], fuerzafrenado_moto['debil'])
-regla_22 = ctrl.Rule(posicion_moto['cerca'] & peso_moto['mediano'] & velocidad_moto['muy lento'], fuerzafrenado_moto['debil'])
+regla_2 = ctrl.Rule(posicion_moto['cerca'] & peso_moto['mediano'] & velocidad_moto['muy lento'], fuerzafrenado_moto['debil'])
 regla_3 = ctrl.Rule(posicion_moto['cerca'] & peso_moto['pesado'] & velocidad_moto['muy lento'], fuerzafrenado_moto['debil'])
 
+regla_4 = ctrl.Rule(posicion_moto['cerca'] & peso_moto['liviano'] & velocidad_moto['lento'], fuerzafrenado_moto['debil'])
+regla_5 = ctrl.Rule(posicion_moto['cerca'] & peso_moto['mediano'] & velocidad_moto['lento'], fuerzafrenado_moto['debil'])
+regla_6 = ctrl.Rule(posicion_moto['cerca'] & peso_moto['pesado'] & velocidad_moto['lento'], fuerzafrenado_moto['debil'])
 
+regla_7 = ctrl.Rule(posicion_moto['cerca'] & peso_moto['liviano'] & velocidad_moto['media'], fuerzafrenado_moto['media'])
+regla_8 = ctrl.Rule(posicion_moto['cerca'] & peso_moto['mediano'] & velocidad_moto['media'], fuerzafrenado_moto['media'])
+regla_9 = ctrl.Rule(posicion_moto['cerca'] & peso_moto['pesado'] & velocidad_moto['media'], fuerzafrenado_moto['media'])
 
-regla_4 = ctrl.Rule(posicion_moto['cerca'] & peso_moto['liviano'] & velocidad_moto['media'], fuerzafrenado_moto['media'])
-regla_5 = ctrl.Rule(posicion_moto['cerca'] & peso_moto['mediano'] & velocidad_moto['media'], fuerzafrenado_moto['media'])
-regla_6 = ctrl.Rule(posicion_moto['cerca'] & peso_moto['pesado'] & velocidad_moto['media'], fuerzafrenado_moto['media'])
+regla_10 = ctrl.Rule(posicion_moto['cerca'] & peso_moto['liviano'] & velocidad_moto['rapido'], fuerzafrenado_moto['media'])
+regla_11 = ctrl.Rule(posicion_moto['cerca'] & peso_moto['mediano'] & velocidad_moto['rapido'], fuerzafrenado_moto['media'])
+regla_12 = ctrl.Rule(posicion_moto['cerca'] & peso_moto['pesado'] & velocidad_moto['rapido'], fuerzafrenado_moto['media'])
 
-regla_7 = ctrl.Rule(posicion_moto['cerca'] & peso_moto['liviano'] & velocidad_moto['rapido'], fuerzafrenado_moto['media'])
-regla_8 = ctrl.Rule(posicion_moto['cerca'] & peso_moto['mediano'] & velocidad_moto['rapido'], fuerzafrenado_moto['media'])
-regla_9 = ctrl.Rule(posicion_moto['cerca'] & peso_moto['pesado'] & velocidad_moto['rapido'], fuerzafrenado_moto['media'])
-
-
+regla_13 = ctrl.Rule(posicion_moto['cerca'] & peso_moto['liviano'] & velocidad_moto['muy rapido'], fuerzafrenado_moto['fuerte'])
+regla_14 = ctrl.Rule(posicion_moto['cerca'] & peso_moto['mediano'] & velocidad_moto['muy rapido'], fuerzafrenado_moto['fuerte'])
+regla_15 = ctrl.Rule(posicion_moto['cerca'] & peso_moto['pesado'] & velocidad_moto['muy rapido'], fuerzafrenado_moto['fuerte'])
 
 #REGLAS CON LA POSICIÓN MEDIA
-regla_10 = ctrl.Rule(posicion_moto['media'] & peso_moto['liviano'] & velocidad_moto['muy lento'], fuerzafrenado_moto['debil'])
-regla_11 = ctrl.Rule(posicion_moto['media'] & peso_moto['mediano'] & velocidad_moto['muy lento'], fuerzafrenado_moto['debil'])
-regla_12 = ctrl.Rule(posicion_moto['media'] & peso_moto['pesado'] & velocidad_moto['muy lento'], fuerzafrenado_moto['debil'])
+regla_16 = ctrl.Rule(posicion_moto['media'] & peso_moto['liviano'] & velocidad_moto['muy lento'], fuerzafrenado_moto['debil'])
+regla_17 = ctrl.Rule(posicion_moto['media'] & peso_moto['mediano'] & velocidad_moto['muy lento'], fuerzafrenado_moto['debil'])
+regla_18 = ctrl.Rule(posicion_moto['media'] & peso_moto['pesado'] & velocidad_moto['muy lento'], fuerzafrenado_moto['debil'])
 
+regla_19 = ctrl.Rule(posicion_moto['media'] & peso_moto['liviano'] & velocidad_moto['lento'], fuerzafrenado_moto['debil'])
+regla_20 = ctrl.Rule(posicion_moto['media'] & peso_moto['mediano'] & velocidad_moto['lento'], fuerzafrenado_moto['debil'])
+regla_21 = ctrl.Rule(posicion_moto['media'] & peso_moto['pesado'] & velocidad_moto['lento'], fuerzafrenado_moto['debil'])
 
+regla_22 = ctrl.Rule(posicion_moto['media'] & peso_moto['liviano'] & velocidad_moto['media'], fuerzafrenado_moto['media'])
+regla_23 = ctrl.Rule(posicion_moto['media'] & peso_moto['mediano'] & velocidad_moto['media'], fuerzafrenado_moto['media'])
 
-regla_13 = ctrl.Rule(posicion_moto['media'] & peso_moto['liviano'] & velocidad_moto['media'], fuerzafrenado_moto['media'])
-regla_14 = ctrl.Rule(posicion_moto['media'] & peso_moto['mediano'] & velocidad_moto['media'], fuerzafrenado_moto['media'])
-regla_15 = ctrl.Rule(posicion_moto['media'] & peso_moto['pesado'] & velocidad_moto['media'], fuerzafrenado_moto['media'])
-
-
-
-regla_16 = ctrl.Rule(posicion_moto['media'] & peso_moto['liviano'] & velocidad_moto['muy rapido'], fuerzafrenado_moto['fuerte'])
-regla_17 = ctrl.Rule(posicion_moto['media'] & peso_moto['mediano'] & velocidad_moto['muy rapido'], fuerzafrenado_moto['fuerte'])
-regla_18 = ctrl.Rule(posicion_moto['media'] & peso_moto['pesado'] & velocidad_moto['muy rapido'], fuerzafrenado_moto['fuerte'])
-
-#REGLAS CON LA POSICIÓN LEJOS
-
-
-regla_19 = ctrl.Rule(posicion_moto['lejos'] & peso_moto['liviano'] & velocidad_moto['lento'], fuerzafrenado_moto['debil'])
-regla_20 = ctrl.Rule(posicion_moto['lejos'] & peso_moto['mediano'] & velocidad_moto['lento'], fuerzafrenado_moto['debil'])
-regla_21 = ctrl.Rule(posicion_moto['lejos'] & peso_moto['pesado'] & velocidad_moto['lento'], fuerzafrenado_moto['debil'])
-
-
-
-regla_22 = ctrl.Rule(posicion_moto['lejos'] & peso_moto['liviano'] & velocidad_moto['rapido'], fuerzafrenado_moto['media'])
-
-
-
-
-sistema_frenado = ctrl.ControlSystem([regla_1, regla_22, regla_3, regla_4, regla_5, regla_6, regla_7,
-                                     regla_8, regla_9, regla_10, regla_11, regla_12,
-                                     regla_13, regla_14, regla_15,  regla_16, regla_17, regla_18,
-                                      regla_19, regla_20, regla_21, regla_22,
-                                     ])
+sistema_frenado = ctrl.ControlSystem([regla_1, regla_2, regla_3, regla_4, regla_5, regla_6, regla_7, regla_8, regla_9, regla_10,
+                                     regla_11, regla_12, regla_13, regla_14, regla_15, regla_16, regla_17, regla_18, regla_19, regla_20,
+                                     regla_21, regla_22, regla_23])
 
 simulador_frenado = ctrl.ControlSystemSimulation(sistema_frenado, flush_after_run = 21*21+1)
-#Asignacion de entradas mi rey
-simulador_frenado.input['Posicion Moto'] = 15
-simulador_frenado.input['Peso Moto'] = 400
-simulador_frenado.input['Velocidad Moto'] = 80
+
+#Asignacion de entradas
+EntradaPos = 45
+EntradaPes = 500
+EntradaV = 300
+
+simulador_frenado.input['Posicion Moto'] = EntradaPos
+
+simulador_frenado.input['Peso Moto'] = EntradaPes
+
+simulador_frenado.input['Velocidad Moto'] = EntradaV
 
 print('Posición: ')
-Entrada = 15
 for t in posicion_moto.terms:
-    mval = np.interp(Entrada, posicion_moto.universe, posicion_moto[t].mf)
+    mval = np.interp(EntradaPos, posicion_moto.universe, posicion_moto[t].mf)
     print(t, mval)
 
-print('\n\nPeso bruto: ')
-Entrada = 400
+print('\n\nPeso: ')
 for t in peso_moto.terms:
-    mval = np.interp(Entrada, peso_moto.universe, peso_moto[t].mf)
+    mval = np.interp(EntradaPes, peso_moto.universe, peso_moto[t].mf)
     print(t, mval)
 
 print('\n\nVelocidad: ')
-Entrada = 50
 for t in velocidad_moto.terms:
-    mval = np.interp(Entrada, velocidad_moto.universe, velocidad_moto[t].mf)
+    mval = np.interp(EntradaV, velocidad_moto.universe, velocidad_moto[t].mf)
     print(t, mval)
 
 simulador_frenado.compute()
@@ -141,22 +128,22 @@ simulador_frenado.compute()
 posicion_moto.view(sim=simulador_frenado)
 plt.title("Funcion de pertenencia - Posicion Moto")
 plt.xlabel("Posicion Moto")
-plt.ylabel("Pertencia")
+plt.ylabel("Grados Pertenencia")
 plt.show()
 peso_moto.view(sim=simulador_frenado)
 plt.title("Funcion de pertenencia - Peso Moto")
-plt.xlabel("Peso Moto")
-plt.ylabel("Pertencia")
+plt.xlabel("Peso Moto(Kg)")
+plt.ylabel("Grados Pertenencia")
 plt.show()
 velocidad_moto.view(sim=simulador_frenado)
 plt.title("Funcion de pertenencia - Velocidad Moto")
-plt.xlabel("Velocidad Moto")
-plt.ylabel("Pertencia")
-plt.show()
-fuerzafrenado_moto.view(sim=simulador_frenado)
-plt.title("Funcion de pertenencia - Fuerza frenado moto")
-plt.xlabel("Fuerza de frenado moto")
-plt.ylabel("Pertencia")
+plt.xlabel("Velocidad Moto(Km/h)")
+plt.ylabel("Grados Pertenencia")
 plt.show()
 
 print('\n\nDebe aplicar una fuerza de ', simulador_frenado.output['Fuerza Frenado'], 'N')
+fuerzafrenado_moto.view(sim=simulador_frenado)
+plt.title("Funcion de pertenencia - Fuerza frenado moto")
+plt.xlabel("Fuerza de frenado moto(N)")
+plt.ylabel("Grados Pertenencia")
+plt.show()
