@@ -18,8 +18,8 @@ posicion_moto['lejos'] = sk.gauss2mf(posicion_moto.universe, 58, 8, 62, 6.5)
 
 posicion_moto.view()
 plt.title("Funcion de pertenencia - Posicion Moto")
-plt.xlabel("Posicion Moto")
-plt.ylabel("Pertencia")
+plt.xlabel("Pertenencia")
+plt.ylabel("Membresia")
 plt.show()
 
 #Generar funciones de pertenencia para peso_moto
@@ -29,8 +29,8 @@ peso_moto['pesado'] = sk.gauss2mf(peso_moto.universe, 600, 50, 700, 100)
 
 peso_moto.view()
 plt.title("Funcion de pertenencia - Peso Moto")
-plt.xlabel("Peso Moto(Kg)")
-plt.ylabel("Grados Pertenencia")
+plt.xlabel("Pertenencia")
+plt.ylabel("Membresia")
 plt.show()
 
 #Generar funciones de pertenencia para velocidad_moto
@@ -42,8 +42,8 @@ velocidad_moto['muy rapido'] = sk.gauss2mf(velocidad_moto.universe, 350, 20, 400
 
 velocidad_moto.view()
 plt.title("Funcion de pertenencia - Velocidad Moto")
-plt.xlabel("Velocidad Moto(Km/h)")
-plt.ylabel("Grados Pertenencia")
+plt.xlabel("Pertenencia")
+plt.ylabel("Membresia")
 plt.show()
 
 #Generar funciones de pertenencia para fuerzafrenado_moto
@@ -53,8 +53,8 @@ fuerzafrenado_moto['fuerte'] = sk.gauss2mf(fuerzafrenado_moto.universe, 850, 100
 
 fuerzafrenado_moto.view()
 plt.title("Funcion de pertenencia - Fuerza frenado moto")
-plt.xlabel("Fuerza de frenado moto(N)")
-plt.ylabel("Grados Pertenencia")
+plt.xlabel("Pertenencia")
+plt.ylabel("Membresia")
 plt.show()
 
 
@@ -159,23 +159,23 @@ simulador_frenado.compute()
 
 posicion_moto.view(sim=simulador_frenado)
 plt.title("Funcion de pertenencia - Posicion Moto")
-plt.xlabel("Posicion Moto")
-plt.ylabel("Grados Pertenencia")
+plt.xlabel("Pertenencia")
+plt.ylabel("Membresia")
 plt.show()
 peso_moto.view(sim=simulador_frenado)
 plt.title("Funcion de pertenencia - Peso Moto")
-plt.xlabel("Peso Moto(Kg)")
-plt.ylabel("Grados Pertenencia")
+plt.xlabel("Pertenencia")
+plt.ylabel("Membresia")
 plt.show()
 velocidad_moto.view(sim=simulador_frenado)
 plt.title("Funcion de pertenencia - Velocidad Moto")
-plt.xlabel("Velocidad Moto(Km/h)")
-plt.ylabel("Grados Pertenencia")
+plt.xlabel("Pertenencia")
+plt.ylabel("Membresia")
 plt.show()
 
 print('\n\nDebe aplicar una fuerza de ', simulador_frenado.output['Fuerza Frenado'], 'N')
 fuerzafrenado_moto.view(sim=simulador_frenado)
 plt.title("Funcion de pertenencia - Fuerza frenado moto")
-plt.xlabel("Fuerza de frenado moto(N)")
-plt.ylabel("Grados Pertenencia")
+plt.xlabel("Pertenencia")
+plt.ylabel("Membresia")
 plt.show()
