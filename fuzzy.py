@@ -3,6 +3,10 @@ import skfuzzy as sk
 from skfuzzy import control as ctrl
 import matplotlib.pyplot as plt
 
+EntradaPos=float(input("DIGITE LA POSICION   \n"))
+EntradaPes=float(input("DIGITE EL PESO \n"))
+EntradaV=float(input("DIGITE LA VELOCIDAD  \n"))
+
 #Generar los universos de entrada
 posicion_moto = ctrl.Antecedent(np.arange(0, 60, 1), 'Posicion Moto')
 peso_moto = ctrl.Antecedent(np.arange(100, 700, 1), 'Peso Moto')
@@ -130,10 +134,9 @@ sistema_frenado = ctrl.ControlSystem([regla_1, regla_2, regla_3, regla_4, regla_
 simulador_frenado = ctrl.ControlSystemSimulation(sistema_frenado, flush_after_run = 21*21+1)
 
 #Asignacion de entradas
-EntradaPos = 45
-EntradaPes = 500
-EntradaV = 300
 
+
+ 
 simulador_frenado.input['Posicion Moto'] = EntradaPos
 
 simulador_frenado.input['Peso Moto'] = EntradaPes
