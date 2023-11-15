@@ -12,7 +12,7 @@ velocidad_moto = ctrl.Antecedent(np.arange(0, 400, 1), 'Velocidad Moto')
 fuerzafrenado_moto = ctrl.Consequent(np.arange(50,1000, 1), 'Fuerza Frenado')
 
 #Generar funciones de pertenencia para posicion_moto
-posicion_moto['cerca'] = sk.gauss2mf(posicion_moto.universe, -2.75, 10, 6, 6.5)
+posicion_moto['cerca'] = sk.gauss2mf(posicion_moto.universe, 0, 10, 6, 6.5)
 posicion_moto['media'] = sk.gaussmf(posicion_moto.universe, 30, 6)
 posicion_moto['lejos'] = sk.gauss2mf(posicion_moto.universe, 58, 8, 62, 6.5)
 
@@ -22,7 +22,7 @@ plt.xlabel("Posicion Moto")
 plt.ylabel("Pertencia")
 plt.show()
 
-#Generar funciones de pertenencia para pesobruto_moto
+#Generar funciones de pertenencia para peso_moto
 peso_moto['liviano'] = sk.gauss2mf(peso_moto.universe, 100, 50, 200, 50)
 peso_moto['mediano'] = sk.gaussmf(peso_moto.universe, 400, 60)
 peso_moto['pesado'] = sk.gauss2mf(peso_moto.universe, 600, 50, 700, 100)
@@ -128,39 +128,31 @@ sistema_frenado = ctrl.ControlSystem([regla_1, regla_2, regla_3, regla_4, regla_
                                      regla_41, regla_42, regla_43, regla_44, regla_45])
 
 simulador_frenado = ctrl.ControlSystemSimulation(sistema_frenado, flush_after_run = 21*21+1)
-#Asignacion de entradas mi rey
-simulador_frenado.input['Posicion Moto'] = 15
 
-simulador_frenado.input['Peso Moto'] = 500
+#Asignacion de entradas
+EntradaPos = 60
+EntradaPes = 700
+EntradaV = 400
 
-simulador_frenado.input['Peso Moto'] = 400
+simulador_frenado.input['Posicion Moto'] = EntradaPos
 
-simulador_frenado.input['Velocidad Moto'] = 80
+simulador_frenado.input['Peso Moto'] = EntradaPes
+
+simulador_frenado.input['Velocidad Moto'] = EntradaV
 
 print('Posición: ')
-Entrada = 40
 for t in posicion_moto.terms:
-    mval = np.interp(Entrada, posicion_moto.universe, posicion_moto[t].mf)
+    mval = np.interp(EntradaPos, posicion_moto.universe, posicion_moto[t].mf)
     print(t, mval)
 
 print('\n\nPeso bruto: ')
-
-Entrada = 500
-
-Entrada = 120
-
 for t in peso_moto.terms:
-    mval = np.interp(Entrada, peso_moto.universe, peso_moto[t].mf)
+    mval = np.interp(EntradaPes, peso_moto.universe, peso_moto[t].mf)
     print(t, mval)
 
 print('\n\nVelocidad: ')
-
-Entrada = 80
-
-Entrada = 300
-
 for t in velocidad_moto.terms:
-    mval = np.interp(Entrada, velocidad_moto.universe, velocidad_moto[t].mf)
+    mval = np.interp(EntradaV, velocidad_moto.universe, velocidad_moto[t].mf)
     print(t, mval)
 
 simulador_frenado.compute()
@@ -180,10 +172,10 @@ plt.title("Funcion de pertenencia - Velocidad Moto")
 plt.xlabel("Velocidad Moto")
 plt.ylabel("Pertencia")
 plt.show()
+
+print('\n\nDebe aplicar una fuerza de ', simulador_frenado.output['Fuerza Frenado'], 'N')
 fuerzafrenado_moto.view(sim=simulador_frenado)
 plt.title("Funcion de pertenencia - Fuerza frenado moto")
 plt.xlabel("Fuerza de frenado moto")
 plt.ylabel("Pertencia")
 plt.show()
-
-print('\n\nDebe aplicar una fuerza de ', simulador_frenado.output['Fuerza Frenado'], 'N')
